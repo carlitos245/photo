@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de destination</title>
+</head>
+<body>
+    <!-- Affichage automatique de l'image -->
+    <img src="C:\Users\Carlo\Downloads\photo.jpg" alt="Ma photo" id="imageAffichee">
+    
+    <script type="text/javascript">
+        // Récupère le chemin de l'image depuis localStorage
+        const cheminImage = localStorage.getItem('cheminImage');
+        if (cheminImage) {
+            // Affiche l'image
+            document.getElementById('imageAffichee').src = cheminImage;
+        }
+    </script>
+</body>
+</html>

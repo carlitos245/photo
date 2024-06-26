@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PRENDRE UNE PHOTO</title>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+</head>
+<body>
+    <video id="webcam" autoplay playsinline width="640" height="480"></video>
+    <canvas id="canvas" class="d-none"></canvas>
+    <a id="download-photo" download="photo.jpg">Télécharger la photo</a>
+
+    <!-- Ajoutez l'élément audio pour le son de la prise de photo -->
+    <audio id="snapSound" src="sonido.wav" preload="auto"></audio>
+
+    <script type="text/javascript">
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const snapSoundElement = document.getElementById('snapSound');
+
+        const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Démarrer la webcam automatiquement
+            webcam.start()
+                .then(result => {
+                    console.log("Webcam started");
+                    // Prendre automatiquement une photo après un court délai (par exemple, 2 secondes)
+                    setTimeout(() => {
+                        let picture = webcam.snap();
+                        console.log("Photo prise :", picture);
+                        // Mettre à jour le lien de téléchargement (vous devez enregistrer cette URL côté serveur)
+                        document.querySelector('#download-photo').href = picture;
+                        // Déclencher automatiquement le téléchargement
+                        document.querySelector('#download-photo').click();
+                        // Après avoir pris la photo et enregistré dans "photo.jpg"
+                        const cheminImage = 'photo.jpg';
+                        localStorage.setItem('cheminImage', cheminImage);
+
+                    }, 2000); // 2 secondes
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        });
+    </script>
+</body>
+</html>
